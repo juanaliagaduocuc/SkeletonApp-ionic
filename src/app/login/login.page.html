@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+</ion-content>
+
+<ion-content [fullscreen]="true">
+<ion-input label="Correo: "
+           labelPlacement="stacked"
+           placeholder="alumno@duoc.cl"
+           ngModel email
+           errorText="Correo Invalido"></ion-input>
+<ion-input  label="Contraseña: "
+            labelPlacement="stacked" 
+            type="password"
+            placeholder="********"
+            name="pass"
+            ngModel pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+            ></ion-input>
+</ion-content>
