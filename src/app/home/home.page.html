@@ -1,8 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-      <ion-title>
-        Inicio
-      </ion-title>
-      <ion-button slot="end" [routerLink]="['/login']">Login</ion-button>
+      @if ( data ){
+        <ion-title>
+          SkeletonApp
+        </ion-title>
+        <ion-button 
+          slot="end"
+          class="ion-margin-end"
+          (click)="cerrar()">Cerrar Sesion</ion-button>
+      }@else{
+        <ion-title class="ion-text-center">
+          SkeletonApp
+        </ion-title>
+      }
   </ion-toolbar>
 </ion-header> 
+
+<ion-content [fullscreen]="true">
+  @if ( data ){
+    
+  }@else {
+    <ion-card class="login ion-padding-bottom">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">
+          Bienvenido
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-text-center">
+        Ingresa a nuestra App
+      </ion-card-content>
+        <div class="btn">
+          <ion-button [routerLink]="['/login']"
+          >
+          Crear Cuenta
+          </ion-button>
+        </div>
+    </ion-card>
+  }
+</ion-content>
+<ion-footer>
+
+</ion-footer>

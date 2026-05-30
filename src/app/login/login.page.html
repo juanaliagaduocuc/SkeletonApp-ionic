@@ -1,26 +1,78 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-</ion-content>
-
 <ion-content [fullscreen]="true">
-<ion-input label="Correo: "
-           labelPlacement="stacked"
-           placeholder="alumno@duoc.cl"
-           ngModel email
-           errorText="Correo Invalido"></ion-input>
-<ion-input  label="Contraseña: "
-            labelPlacement="stacked" 
-            type="password"
-            placeholder="********"
-            name="pass"
-            ngModel pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
-            ></ion-input>
+  <ion-card class="login">
+    <ion-card-header>
+      <ion-card-title>
+        Inicia Sesion
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input
+        id="user"
+        name="user"
+        label="Usuario"
+        labelPlacement="stacked"
+        [(ngModel)]="usuario.user"
+        #user="ngModel"
+        ngModel required minlength="3" maxlength="8"
+        pattern="[a-zA-Z0-9]{3,8}"
+      ></ion-input>
+      <ion-input
+        id="pass"
+        name="pass"
+        label="Contraseña"
+        labelPlacement="stacked"
+        type="password"
+        [(ngModel)]="usuario.pass"
+        #pass="ngModel"
+        ngModel required
+        pattern="\d{4}"
+        ></ion-input>
+        <div>
+          <ion-text color="danger">
+            @if ( user.invalid && user.touched ){
+              @if ( user.hasError('required') ){
+                Se requiere un nombre de usuario<br>
+              } 
+              @if ( user.hasError('pattern') ){
+                Se requiere un nombre de usuario valido<br>
+                (Alfanumerico de 3-8 digitos)
+              }
+            }
+            @if ( pass.invalid && ( pass.dirty || pass.touched )){
+              @if ( pass.hasError('required') ){
+                Se requiere de un PIN
+              }
+              @if ( pass.hasError('pattern') ){
+                Ingresa un PIN numerico de 4 digitos
+              }
+            }
+          </ion-text>
+        </div>
+        <div class="btn">
+          @if ( user.invalid || pass.invalid) {
+            <ion-button 
+              class="ion-margin-top"
+              [disabled]="true">
+              Ingresar
+            </ion-button>
+          }
+          @if ( user.valid && pass.valid ){
+            <ion-button 
+              class="ion-margin-top"
+              (click)="ingresar()">
+              Ingresar
+            </ion-button>
+          }
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
