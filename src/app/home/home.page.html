@@ -4,10 +4,11 @@
         <ion-title>
           SkeletonApp
         </ion-title>
-        <ion-button 
-          slot="end"
-          class="ion-margin-end"
-          (click)="cerrar()">Cerrar Sesion</ion-button>
+        <button matButton="elevated"
+          (click)="cerrar()" 
+          slot=end
+          class="ion-margin-end">
+          Cerrar Sesion</button>
       }@else{
         <ion-title class="ion-text-center">
           SkeletonApp
@@ -17,10 +18,142 @@
 </ion-header> 
 
 <ion-content [fullscreen]="true">
-  @if ( data ){
-    
-  }@else {
-    <ion-card class="login ion-padding-bottom">
+    <ion-card class="details" [hidden]="dataHidden">
+      <ion-card-header>
+        <ion-card-title>
+          Bienvenido 
+          @if (data) {
+            {{data.user}}
+          }
+        </ion-card-title>
+        <ion-card-subtitle>
+          Completa tu registro
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input
+          id="nombre"
+          name="nombre"
+          label="Nombre *"
+          labelPlacement="stacked"
+          [(ngModel)]="usuario.nombre"
+          ngModel required
+          pattern="^[A-Z][a-z]{1,50}"
+          #nombre="ngModel"
+          >
+        </ion-input>
+        <ion-input
+          id="apellido"
+          name="apellido"
+          label="Apellido *"
+          labelPlacement="stacked"
+          [(ngModel)]="usuario.apellido"
+          ngModel required
+          pattern="^[A-Z][a-z]{1,50}"
+          #apellido="ngModel"
+          >
+        </ion-input>
+        <mat-form-field class="input"
+          hideRequiredMarker>
+          <mat-label>Nivel Educacion</mat-label>
+          <mat-select
+            id="educacion"
+            name="educacion"
+            [(ngModel)]="usuario.educacion"
+            #educacion="ngModel"
+            ngModel required> 
+            @for ( nvl of nvls; track nvl ){
+              <mat-option [value]="nvl.desc">{{nvl.desc}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="input"
+          hideRequiredMarker>
+          <mat-label>Fecha Nacimiento</mat-label>
+          <input matInput
+            readonly
+            [matDatepicker]="picker"
+            id="fec_nac"
+            name="fec_nac"
+            [(ngModel)]="usuario.fec_nac"
+            #fec_nac="ngModel"
+            ngModel required>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </ion-card-content>
+      <div class="ion-padding-bottom">
+        <table class="table">
+          <tr>
+            <th>
+              <button matButton="elevated"
+                (click)="play()">
+                Limpiar</button>
+            </th>
+            <th>
+              <button matButton="elevated"
+                (click)="abrirAlerta(true)">
+                Mostrar</button>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </ion-card>
+    @if ( nombre.valid && apellido.valid 
+      && educacion.invalid && fec_nac.invalid ) { 
+      <ion-alert
+        [isOpen]="alertOpen"
+        [buttons]="alertButtons"
+        (didDismiss)="abrirAlerta(false)"
+        message="
+          Tu nombre es {{usuario.nombre}} {{usuario.apellido}}">
+      </ion-alert>
+    }
+    @else if ( nombre.valid && apellido.valid 
+      && educacion.valid && fec_nac.invalid ) { 
+      <ion-alert
+        [isOpen]="alertOpen"
+        [buttons]="alertButtons"
+        (didDismiss)="abrirAlerta(false)"
+        message="
+          Tu nombre es {{usuario.nombre}} {{usuario.apellido}}<br>
+          Educacion: {{usuario.educacion}}">
+      </ion-alert>
+    }
+    @else if ( nombre.valid && apellido.valid 
+      && educacion.invalid && fec_nac.valid ) { 
+      <ion-alert
+        [isOpen]="alertOpen"
+        [buttons]="alertButtons"
+        (didDismiss)="abrirAlerta(false)"
+        message="
+          Tu nombre es {{usuario.nombre}} {{usuario.apellido}}<br>
+          Fecha Nacimiento: {{ usuario.fec_nac | date: 'dd/MM/yyyy' }}">
+      </ion-alert>
+    }@else if ( nombre.valid && apellido.valid && 
+      educacion.valid && fec_nac.valid ) { 
+      <ion-alert
+        [isOpen]="alertOpen"
+        [buttons]="alertButtons"
+        (didDismiss)="abrirAlerta(false)"
+        message="
+          Tu nombre es {{usuario.nombre}} {{usuario.apellido}}<br>
+          Educacion: {{usuario.educacion}}
+          Fecha Nacimiento: {{usuario.fec_nac | date: 'dd/MM/yyyy' }}">
+      </ion-alert>
+    }
+    @else {
+      <ion-alert
+        [isOpen]="alertOpen"
+        [buttons]="alertButtons"
+        (didDismiss)="abrirAlerta(false)"
+        message=
+        "Por favor, ingresa los datos solicitados">
+      </ion-alert>
+    }
+    <ion-card 
+      class="login ion-padding-bottom ion-flex-row"
+      [hidden]="dataShown">
       <ion-card-header>
         <ion-card-title class="ion-text-center">
           Bienvenido
@@ -30,14 +163,19 @@
         Ingresa a nuestra App
       </ion-card-content>
         <div class="btn">
-          <ion-button [routerLink]="['/login']"
-          >
+          <button
+            matButton="elevated"
+            routerLink="/login">
           Crear Cuenta
-          </ion-button>
+        </button>
         </div>
     </ion-card>
-  }
 </ion-content>
-<ion-footer>
 
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="ion-text-center ion-padding-vertical">
+      @100% Juan Aliaga
+    </ion-title>
+  </ion-toolbar>
 </ion-footer>

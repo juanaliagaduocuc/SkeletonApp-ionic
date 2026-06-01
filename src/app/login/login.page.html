@@ -22,13 +22,13 @@
         labelPlacement="stacked"
         [(ngModel)]="usuario.user"
         #user="ngModel"
-        ngModel required minlength="3" maxlength="8"
+        ngModel required
         pattern="[a-zA-Z0-9]{3,8}"
       ></ion-input>
       <ion-input
         id="pass"
         name="pass"
-        label="Contraseña"
+        label="PIN"
         labelPlacement="stacked"
         type="password"
         [(ngModel)]="usuario.pass"
@@ -76,3 +76,11 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="ion-text-center ion-padding-vertical">
+      @100% Juan Aliaga
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
