@@ -6,7 +6,7 @@
         </ion-title>
         <button matButton="elevated"
           (click)="cerrar()" 
-          slot=end
+          slot="end"
           class="ion-margin-end">
           Cerrar Sesion</button>
       }@else{
@@ -38,7 +38,7 @@
           labelPlacement="stacked"
           [(ngModel)]="usuario.nombre"
           ngModel required
-          pattern="^[A-Z][a-z]{1,50}"
+          pattern="[A-Za-z]{1,50}"
           #nombre="ngModel"
           >
         </ion-input>
@@ -49,7 +49,7 @@
           labelPlacement="stacked"
           [(ngModel)]="usuario.apellido"
           ngModel required
-          pattern="^[A-Z][a-z]{1,50}"
+          pattern="[A-Za-z]{1,50}"
           #apellido="ngModel"
           >
         </ion-input>
@@ -138,7 +138,7 @@
         (didDismiss)="abrirAlerta(false)"
         message="
           Tu nombre es {{usuario.nombre}} {{usuario.apellido}}<br>
-          Educacion: {{usuario.educacion}}
+          Educacion: {{usuario.educacion}}<br>
           Fecha Nacimiento: {{usuario.fec_nac | date: 'dd/MM/yyyy' }}">
       </ion-alert>
     }
